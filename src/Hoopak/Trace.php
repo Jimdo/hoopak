@@ -9,7 +9,7 @@ function _id()
 
 class Trace
 {
-    
+    public $traceId;    
     /**
      * Create a Trace.
      */
@@ -56,7 +56,7 @@ class Trace
      */
     public function child($name)
     {
-        $trace = new self::_construct($name, $this->traceId, null, $this->spanId);
+        $trace = new self($name, $this->traceId, null, $this->spanId);
         $trace->setEndpoint($this->_endpoint);
         return $trace;
     }
@@ -66,7 +66,7 @@ class Trace
      */
     public function setEndpoint($endpoint)
     {
-        $this->_endpoint = $endpoint
+        $this->_endpoint = $endpoint;
     }
 
 }

@@ -1,0 +1,13 @@
+{
+    "name": "Jimdo/hoopak",
+    "type": "library",
+    "description": "Zipkin tracer client library",
+    "autoload": {
+        "psr-0": {
+            "Hoopak": "src"
+        }
+    },
+    "require": {
+        "EHER/PHPUnit": "1.6"
+    }
+}

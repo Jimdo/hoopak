@@ -12,7 +12,7 @@ class TraceTest extends \PHPUnit_Framework_TestCase
      */
     public function aTraceCanBeCreated()
     {
-        $trace = new Trace();
+        $trace = new Trace("a fresh trace");
         $this->assertNotNull($trace->traceId);
     }
     
