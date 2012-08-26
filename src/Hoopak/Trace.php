@@ -2,14 +2,10 @@
 namespace Hoopak;
 
 
-function _id()
-{
-    return rand(0, pow(2,63) - 1);
-}
-
 class Trace
 {
-    public $traceId;    
+    public $traceId;
+
     /**
      * Create a Trace.
      */
@@ -20,13 +16,13 @@ class Trace
         if ($traceId) {
             $this->traceId = $traceId;
         } else {
-            $traceId = _id();
+            $this->traceId = $this->_id();
         }
 
         if ($spanId) {
             $this->spanId = $spanId;
         } else {
-            $spanId = _id();
+            $this->spanId = $this->_id();
         }
 
         $this->parentSpanId = $parentSpanId;
@@ -68,5 +64,11 @@ class Trace
     {
         $this->_endpoint = $endpoint;
     }
+
+    private static function _id()
+    {
+        return rand(0, pow(2,63)-1);
+    }
+    
 
 }
