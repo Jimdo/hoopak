@@ -4,8 +4,6 @@ namespace Hoopak;
 
 class Trace
 {
-    public $traceId;
-
     /**
      * Create a Trace.
      */
@@ -35,7 +33,7 @@ class Trace
     /**
      * Record an annotation
      */ 
-    public function record($annotation)
+    public function record(Hoopak\Annotation $annotation)
     {
         if (!$annotation->endpoint && $this->_endpoint) {
             $annotation->endpoint = $this->endpoint;
@@ -60,7 +58,7 @@ class Trace
     /**
      * Set the endpoint
      */
-    public function setEndpoint($endpoint)
+    public function setEndpoint(Hoopak\Endpoint $endpoint)
     {
         $this->_endpoint = $endpoint;
     }
