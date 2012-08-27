@@ -8,12 +8,12 @@ namespace Hoopak;
 class Annotation
 {
     
-    public function __construct($name, $value, $annotationType, $endpoint)
+    public function __construct($name, $value, $annotationType, $endpoint=null)
     {
         $this->name = $name;
         $this->value = $value;
         $this->annotationType = $annotationType;
-        $this->endpoint = endpoint;
+        $this->endpoint = $endpoint;
     }
 
     public static function timestamp($name, $timestamp=null)

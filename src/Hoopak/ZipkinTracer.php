@@ -7,14 +7,13 @@ namespace Hoopak;
  **/
 class ZipkinTracer
 {
-    // TODO properly import thrift constants
-    private _endAnnotations = array("cr", "ss");
-    
     public function __construct($scribeClient, $category="zipkin")
     {
         $this->_scribe = $scribeClient;
         $this->_category = $category;
         $this->_annotationsForTrace = array();
+        // TODO properly import thrift constants
+        $this->_endAnnotations = array("cr", "ss");
     }
 
     public function sendTrace($trace, $annotations)
@@ -25,10 +24,10 @@ class ZipkinTracer
 
     public function record($trace, $annotation)
     {
-        $traceKey = array($trace->traceId, $trace->spanId);
+        $traceKey = $trace->traceId . ":" . $trace->spanId;
         $this->_annotationsForTrace[$traceKey][] = $annotation;
 
-        if in_array($annotation->name, $this->_endAnnotations) {
+        if (in_array($annotation->name, $this->_endAnnotations)) {
             $annotations = $this->_annotationsForTrace[$traceKey];
             unset($this->_annotationsForTrace[$traceKey]);
             $this->sendTrace($trace, $annotations);
@@ -43,11 +42,11 @@ class ZipkinTracer
         foreach ($annotations as $annotation) {
             $host = null;
             if ($annotation->endpoint) {
-                host = new Endpoint(
+                $host = new Endpoint(
                     array(
-                        "ipv4" => annotation->ipv4,
-                        "port" => annotation->port,
-                        "service_name" => annotation->port,
+                        "ipv4" => $annotation->ipv4,
+                        "port" => $annotation->port,
+                        "service_name" => $annotation->port,
                     )
                 );
             }
@@ -74,13 +73,13 @@ class ZipkinTracer
                 "annotations" => $thriftAnnotations,
                 "binary_annotations" => $binaryAnnotations
             )
-        )
+        );
 
         $trans = new TMemoryBuffer();
         $proto = new TBinaryProtocol(trans);
 
         $thriftTrace->write($proto);
 
-        return base64_encode($trans->getBuffer())
+        return base64_encode($trans->getBuffer());
     }
 }
