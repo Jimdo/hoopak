@@ -13,6 +13,7 @@
 # limitations under the License.
 namespace java com.twitter.zipkin.gen
 namespace rb Zipkin
+namespace php Zipkin
 
 //************** Collection related structs **************
 

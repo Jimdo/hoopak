@@ -16,7 +16,7 @@ class ZipkinTracerTest extends \PHPUnit_Framework_TestCase
         $scribe = new ScribeMock();
         $zipkinTracer = new ZipkinTracer($scribe);
         $trace = new Trace("foo", 1, 1, 1, array($zipkinTracer));
-        $trace->record(Annotation::clientReceive(123));
+        $trace->record(Annotation::clientReceive(1234455632));
         $this->assertEquals("foo", $scribe->message);
     }
 }
@@ -25,7 +25,7 @@ class ScribeMock
 {
     public $message;
 
-    public function log($message, $category)
+    public function log($category, $message)
     {
         $this->message = $message;
     }

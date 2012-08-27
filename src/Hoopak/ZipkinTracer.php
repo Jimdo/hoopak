@@ -1,7 +1,17 @@
 <?php
-
 namespace Hoopak;
 
+$GLOBALS["THRIFT_ROOT"] = "/usr/lib/php";
+require_once dirname(__FILE__) . "/Thrift/zipkinCore/zipkinCore_types.php";
+require_once dirname(__FILE__) . "/Thrift/zipkinCore/zipkinCore_constants.php";
+require_once $GLOBALS["THRIFT_ROOT"].'/protocol/TBinaryProtocol.php';
+require_once $GLOBALS["THRIFT_ROOT"].'/transport/TMemoryBuffer.php';
+
+
+
+use Zipkin\Annotation;
+use Zipkin\Span;
+use Zipkin\Endpoint;
 /**
  * 
  **/
@@ -19,7 +29,7 @@ class ZipkinTracer
     public function sendTrace($trace, $annotations)
     {
         $thriftOut = $this->thriftToBase64($trace, $annotations);
-        $this->_scribe->log($this->category, $thriftOut);
+        $this->_scribe->log($this->_category, $thriftOut);
     }
 
     public function record($trace, $annotation)
@@ -42,7 +52,7 @@ class ZipkinTracer
         foreach ($annotations as $annotation) {
             $host = null;
             if ($annotation->endpoint) {
-                $host = new Endpoint(
+                $host = new \Zipkin\Endpoint(
                     array(
                         "ipv4" => $annotation->ipv4,
                         "port" => $annotation->port,
@@ -52,7 +62,7 @@ class ZipkinTracer
             }
 
             if ($annotation->annotationType == 'timestamp') {
-                $thriftAnnotations[] = new Annotation(
+                $thriftAnnotations[] = new \Zipkin\Annotation(
                     array(
                         "timestamp" => $annotation->value,
                         "value" => $annotation->name,
@@ -64,19 +74,19 @@ class ZipkinTracer
             }
         }
 
-        $thriftTrace = new Span(
+        $thriftTrace = new \Zipkin\Span(
             array(
                 "trace_id" => $trace->traceId,
                 "name" => $trace->name,
                 "id" => $trace->spanId,
-                "parent_id" => $trace->parentId,
+                "parent_id" => $trace->parentSpanId,
                 "annotations" => $thriftAnnotations,
                 "binary_annotations" => $binaryAnnotations
             )
         );
 
-        $trans = new TMemoryBuffer();
-        $proto = new TBinaryProtocol(trans);
+        $trans = new \TMemoryBuffer();
+        $proto = new \TBinaryProtocol($trans);
 
         $thriftTrace->write($proto);
 
