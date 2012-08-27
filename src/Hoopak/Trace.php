@@ -37,7 +37,7 @@ class Trace
     public function record($annotation)
     {
         if (!$annotation->endpoint && $this->_endpoint) {
-            $annotation->endpoint = $this->endpoint;
+            $annotation->endpoint = $this->_endpoint;
         }
 
         foreach ($this->_tracers as $tracer) {
@@ -66,7 +66,7 @@ class Trace
 
     private static function _id()
     {
-        return rand(0, pow(2,63)-1);
+        return rand(0, pow(2,56)-1);
     }
     
 

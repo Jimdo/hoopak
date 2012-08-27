@@ -54,9 +54,9 @@ class ZipkinTracer
             if ($annotation->endpoint) {
                 $host = new \Zipkin\Endpoint(
                     array(
-                        "ipv4" => $annotation->ipv4,
-                        "port" => $annotation->port,
-                        "service_name" => $annotation->port,
+                        "ipv4" => ip2long($annotation->endpoint->ipv4),
+                        "port" => $annotation->endpoint->port,
+                        "service_name" => $annotation->endpoint->serviceName,
                     )
                 );
             }
