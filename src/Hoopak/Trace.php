@@ -52,6 +52,7 @@ class Trace
     public function child($name)
     {
         $trace = new self($name, $this->traceId, null, $this->spanId);
+        $trace->_tracers = $this->_tracers;
         $trace->setEndpoint($this->_endpoint);
         return $trace;
     }
