@@ -40,6 +40,7 @@ class ZipkinTracer
         if (in_array($annotation->name, $this->_endAnnotations)) {
             $annotations = $this->_annotationsForTrace[$traceKey];
             unset($this->_annotationsForTrace[$traceKey]);
+            print_r(sprintf("Sending trace: %s w/ %s", $traceKey, var_export($annotations, true)));
             $this->sendTrace($trace, $annotations);
         }
     }
