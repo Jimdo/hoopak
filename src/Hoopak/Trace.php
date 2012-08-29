@@ -26,7 +26,11 @@ class Trace
 
         $this->parentSpanId = $parentSpanId;
 
-        $this->_tracers = $tracers;
+        if (!empty($tracers)) {
+            $this->_tracers = $tracers;
+        } else {
+            $this->_tracers = Hoopak::getTracers();
+        }
 
         $this->_endpoint = null;
     }
