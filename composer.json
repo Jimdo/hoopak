@@ -4,10 +4,11 @@
     "description": "Zipkin tracer client library",
     "autoload": {
         "psr-0": {
-            "Hoopak": "src"
+            "Hoopak\\": "src/"
         }
     },
     "require": {
-        "EHER/PHPUnit": "1.6"
+        "leric/php-thrift": "dev-master",
+        "phpunit/phpunit": "3.7.31"
     }
 }
