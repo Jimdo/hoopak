@@ -5,7 +5,8 @@
     "autoload": {
         "psr-0": {
             "Hoopak\\": "src/"
-        }
+        },
+        "classmap": ["gen-php/"]
     },
     "require": {
         "leric/php-thrift": "dev-master",
