@@ -1,17 +1,6 @@
 <?php
 namespace Hoopak;
 
-$GLOBALS["THRIFT_ROOT"] = "/usr/lib/php";
-require_once dirname(__FILE__) . "/Thrift/zipkinCore/zipkinCore_types.php";
-require_once dirname(__FILE__) . "/Thrift/zipkinCore/zipkinCore_constants.php";
-require_once $GLOBALS["THRIFT_ROOT"].'/protocol/TBinaryProtocol.php';
-require_once $GLOBALS["THRIFT_ROOT"].'/transport/TMemoryBuffer.php';
-
-
-
-use Zipkin\Annotation;
-use Zipkin\Span;
-use Zipkin\Endpoint;
 /**
  * 
  **/
@@ -86,8 +75,8 @@ class ZipkinTracer
             )
         );
 
-        $trans = new \TMemoryBuffer();
-        $proto = new \TBinaryProtocol($trans);
+        $trans = new \Thrift\Transport\TMemoryBuffer();
+        $proto = new \Thrift\Protocol\TBinaryProtocol($trans);
 
         $thriftTrace->write($proto);
 

@@ -2,15 +2,6 @@
 
 namespace Hoopak;
 
-use Zipkin\LogEntry;
-
-$GLOBALS["THRIFT_ROOT"] = "/usr/lib/php";
-require_once dirname(__FILE__) . "/Thrift/scribe/scribe_types.php";
-require_once dirname(__FILE__) . "/Thrift/scribe/scribe.php";
-require_once $GLOBALS["THRIFT_ROOT"].'/protocol/TBinaryProtocol.php';
-require_once $GLOBALS["THRIFT_ROOT"].'/transport/TSocket.php';
-require_once $GLOBALS["THRIFT_ROOT"].'/transport/TFramedTransport.php';
-
 /**
  * A simple client for Scribe,
  * used as the transport to the Zipkin collector. 
@@ -26,15 +17,15 @@ class ScribeClient
 
     public function log($category, $message)
     {
-        $logEntry = new \Zipkin\LogEntry(
+        $logEntry = new \Scribe\LogEntry(
             array(
                 "category" => $category,
                 "message" => $message
             )
         );
-        $socket = new \TSocket($this->_host, $this->_port);
-        $transport = new \TFramedTransport($socket);
-        $protocol = new \TBinaryProtocol($transport);
+        $socket = new \Thrift\Transport\TSocket($this->_host, $this->_port);
+        $transport = new \Thrift\Transport\TFramedTransport($socket);
+        $protocol = new \Thrift\Protocol\TBinaryProtocol($transport);
         $scribe = new \Zipkin\scribeClient($protocol);
         $transport->open();
         $scribe->Log(array($logEntry));
