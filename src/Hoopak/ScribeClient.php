@@ -26,7 +26,7 @@ class ScribeClient
         $socket = new \Thrift\Transport\TSocket($this->_host, $this->_port);
         $transport = new \Thrift\Transport\TFramedTransport($socket);
         $protocol = new \Thrift\Protocol\TBinaryProtocol($transport);
-        $scribe = new \Zipkin\scribeClient($protocol);
+        $scribe = new \Scribe\scribeClient($protocol);
         $transport->open();
         $scribe->Log(array($logEntry));
         $transport->close();
