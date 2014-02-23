@@ -60,7 +60,15 @@ class ZipkinTracer
                     )
                 );
             } else {
-                //TODO handle binary annotations
+                $type = constant('\Zipkin\AnnotationType::' . strtoupper($annotation->annotationType));
+                $binaryAnnotations[] = new \Zipkin\BinaryAnnotation(
+                    array(
+                        "key" => $annotation->name,
+                        "value" => $annotation->value,
+                        "annotation_type" => $type,
+                        "host" => $host
+                    )
+                );
             }
         }
 
