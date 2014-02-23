@@ -9,7 +9,9 @@
         "classmap": ["gen-php/"]
     },
     "require": {
-        "leric/php-thrift": "dev-master",
+        "leric/php-thrift": "dev-master"
+    },
+    "require-dev": {
         "phpunit/phpunit": "3.7.31"
     }
 }
