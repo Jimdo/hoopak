@@ -19,7 +19,7 @@ class Annotation
     public static function timestamp($name, $timestamp=null)
     {
         if(!$timestamp) {
-            $timestamp = round(microtime(true) * 1000);
+            $timestamp = round(microtime(true) * 1000 * 1000);
         }
 
         return new self($name, $timestamp, "timestamp");
