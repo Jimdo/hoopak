@@ -1,5 +1,5 @@
 {
-    "name": "Jimdo/hoopak",
+    "name": "jimdo/hoopak",
     "type": "library",
     "description": "Zipkin tracer client library",
     "autoload": {
